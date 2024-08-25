@@ -11,6 +11,7 @@ class Acount_Screen extends StatefulWidget {
 
 class _Acount_ScreenState extends State<Acount_Screen> {
   bool _switchValue = true;
+  bool _switchValue2 = true;
 
   @override
   Widget build(BuildContext context) {
@@ -68,6 +69,27 @@ class _Acount_ScreenState extends State<Acount_Screen> {
                           });
                         },
                       ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "ar",
+                        style: TextStyle(fontSize: 20, color: Colors.white), // Adjust text color for visibility
+                      ),
+                      Switch(
+                        activeColor: Colors.yellow,
+                        value: _switchValue2,
+                        onChanged: (bool value) {
+                          setState(() {
+                            _switchValue2 = value;
+                          });
+                        },
+                      ),
+                      Text("en",
+                      style:TextStyle(color: Colors.white,fontSize: 20) ,
+                      )
                     ],
                   ),
                   SizedBox(height: 20),
