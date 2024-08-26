@@ -1,7 +1,20 @@
+import 'new/API.dart';
+
 class Consts {
-  String ORGURL = "https://newsapi.org";
-  String APIKey = "ccb17c1e1b1c4189852be0ea4b54eccf";
-  String Endpoints = "/v2/everything";
+   static const baseurl = "http://api.weatherstack.com";
+   static const apiKey = "8663c005dfafc9645c37d75be196692b";
+   static const endpoints = "/current";
+   static const endpoints2 = "/forecast";
 
+   String apiCurrent = API(
+      baseUrl: baseurl,
+      apiKey: apiKey,
+      endPoint: endpoints,
+   ).URL(queries: { });
 
+   String apiforecast = API(
+      baseUrl: baseurl,
+      apiKey: apiKey,
+      endPoint: endpoints2,
+   ).URL(queries: { });
 }

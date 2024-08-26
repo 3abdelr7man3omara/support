@@ -40,15 +40,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => NewsCubit()..get_news()),
-        BlocProvider(create: (context) => CounterCubit()),
+        //BlocProvider(create: (context) => NewsCubit()..get_news()),
+        // BlocProvider(create: (context) => CounterCubit()),
         BlocProvider(create: (context) => AuthCubit(FirebaseAuth.instance)),
       ],
       child: MaterialApp(
       scrollBehavior: AppScrollBehavior(),
 
         debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
+        title: 'Weather App',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
