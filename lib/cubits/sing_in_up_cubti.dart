@@ -7,18 +7,22 @@ class AuthCubit extends Cubit<AuthState> {
 
   AuthCubit(this._auth) : super(AuthInitial());
 
-  Future<void> registerUser(String email, String password) async {
+  Future<void> registerUser(String email, String password, String displayName) async {
     emit(AuthLoading());
     try {
       UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-      
+
+      // Update the user's profile with the display name
+      await userCredential.user!.updateDisplayName(displayName);
+      await userCredential.user!.reload(); // Reload to get the updated user info
+
       emit(AuthAuthenticated(userCredential.user!));
       emit(AuthRegistered());
     } catch (e) {
-      emit(AuthError("Error creating user"));
+      emit(AuthError("Error creating user: ${e.toString()}"));
     }
   }
 
@@ -31,7 +35,7 @@ class AuthCubit extends Cubit<AuthState> {
       );
       emit(AuthAuthenticated(userCredential.user!));
     } catch (e) {
-      emit(AuthError("Error signing in user"));
+      emit(AuthError("Error signing in user: ${e.toString()}"));
     }
   }
 
@@ -41,8 +45,7 @@ class AuthCubit extends Cubit<AuthState> {
       await _auth.signOut();
       emit(AuthUnauthenticated());
     } catch (e) {
-      emit(AuthError("Error signing out"));
+      emit(AuthError("Error signing out: ${e.toString()}"));
     }
   }
 }
-

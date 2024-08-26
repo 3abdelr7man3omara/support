@@ -11,6 +11,7 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _userNameController = TextEditingController(); // Add this controller
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +23,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
+            TextField(
+              controller: _userNameController, // User name input field
+              decoration: InputDecoration(labelText: 'User Name'),
+            ),
             TextField(
               controller: _emailController,
               decoration: InputDecoration(labelText: 'Email'),
@@ -37,6 +42,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 context.read<AuthCubit>().registerUser(
                       _emailController.text,
                       _passwordController.text,
+                      _userNameController.text, // Pass user name
                     );
               },
               child: Text('Sign Up'),

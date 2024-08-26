@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -12,7 +13,7 @@ class Acount_Screen extends StatefulWidget {
 class _Acount_ScreenState extends State<Acount_Screen> {
   bool _switchValue = true;
   bool _switchValue2 = true;
-
+  User? user = FirebaseAuth.instance.currentUser; 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,12 +36,12 @@ class _Acount_ScreenState extends State<Acount_Screen> {
                   ),
                   SizedBox(height: 20),
                   Text(
-                    "User Name from fire base",
+                    user?.displayName ?? " ", 
                     style: TextStyle(fontSize: 20, color: Colors.white), // Adjust text color for visibility
                   ),
                   SizedBox(height: 20),
                   Text(
-                    "User Email",
+                    user?.email?? " ",
                     style: TextStyle(fontSize: 20, color: Colors.white), // Adjust text color for visibility
                   ),
                   SizedBox(height: 20),
