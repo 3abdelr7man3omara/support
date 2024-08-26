@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:untitled2/cubits/onboarding_cubit.dart';
 import 'package:untitled2/Screens/onboarding_screens.dart';
 import 'package:untitled2/main.dart';
+import 'package:lottie/lottie.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -13,7 +14,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(seconds: 3), () {
+    Future.delayed(Duration(seconds: 5), () {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (_) => OnboardingWrapper(),
@@ -26,7 +27,8 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Image.asset('assets/8504201.jpg'),
+
+        child:  LottieBuilder.asset('assets/lottie/Animation(1).json',fit: BoxFit.contain,),
       ),
     );
   }
