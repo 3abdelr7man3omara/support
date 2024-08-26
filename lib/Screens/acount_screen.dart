@@ -20,10 +20,7 @@ class _Acount_ScreenState extends State<Acount_Screen> {
         fit: StackFit.expand,
         children: [
           // Background image
-          Image.network(
-            "https://img.freepik.com/premium-photo/old-texture-black-yellow-background-ai-generated-image_532963-7007.jpg", // Replace with your image URL
-            fit: BoxFit.fill,
-          ),
+          Image.asset('assets/back.jpeg',fit : BoxFit.fill),
           // Foreground content
           Padding(
             padding: const EdgeInsets.all(10.0),

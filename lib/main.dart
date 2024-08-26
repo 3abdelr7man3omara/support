@@ -66,7 +66,7 @@ class AuthGate extends StatelessWidget {
     return BlocBuilder<AuthCubit, AuthState>(
       builder: (context, state) {
         if (state is AuthAuthenticated) {
-          return HomePage();
+          return WeatherHomeScreen();
         } else {
           return SignInScreen();
         }
