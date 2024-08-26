@@ -35,7 +35,7 @@ class weather_request {
       weather_code:json["weather_code"],
       temperature:json["temperature"],
       UV_index:json["uv_index"],
-      location: json[" "],
+      location: json["region"],
       weather_icons: json["weather_icons"],
       feelslike: json["feelslike"],
 
