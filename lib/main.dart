@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:untitled2/Screens/SplashScreen.dart';
 import 'package:untitled2/Screens/home_screen.dart';
 import 'package:untitled2/Screens/news_Screen.dart';
+import 'package:untitled2/Screens/weather_home_screen.dart';
 import 'package:untitled2/Screens/sing_in.dart'; // Import your SplashScreen
 import 'package:untitled2/cubits/counter_cubit.dart';
 import 'package:untitled2/cubits/news_cubit.dart';
