@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "486952228160",
-    "project_id": "fir-test-11f2d",
-    "storage_bucket": "fir-test-11f2d.appspot.com"
+    "project_number": "30488494644",
+    "project_id": "supprt-fa9c0",
+    "storage_bucket": "supprt-fa9c0.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:486952228160:android:b9a36600893d60b15816a5",
+        "mobilesdk_app_id": "1:30488494644:android:fce4a2e5a0a4b1ab2c0061",
         "android_client_info": {
-          "package_name": "com.example.app"
+          "package_name": "google.app"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyABKx7RAp2LSvJVgCZZDkWiGxizr6Fy8SI"
+          "current_key": "AIzaSyDfvAbdnqaFTigWAhCi5I6dS2U0UEvYy_c"
         }
       ],
       "services": {

@@ -1,0 +1,48 @@
+import 'package:bloc/bloc.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:untitled2/cubits/sing_in_up_state.dart';
+
+class AuthCubit extends Cubit<AuthState> {
+  final FirebaseAuth _auth;
+
+  AuthCubit(this._auth) : super(AuthInitial());
+
+  Future<void> registerUser(String email, String password) async {
+    emit(AuthLoading());
+    try {
+      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      
+      emit(AuthAuthenticated(userCredential.user!));
+      emit(AuthRegistered());
+    } catch (e) {
+      emit(AuthError("Error creating user"));
+    }
+  }
+
+  Future<void> signInUser(String email, String password) async {
+    emit(AuthLoading());
+    try {
+      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      emit(AuthAuthenticated(userCredential.user!));
+    } catch (e) {
+      emit(AuthError("Error signing in user"));
+    }
+  }
+
+  Future<void> signOutUser() async {
+    emit(AuthLoading());
+    try {
+      await _auth.signOut();
+      emit(AuthUnauthenticated());
+    } catch (e) {
+      emit(AuthError("Error signing out"));
+    }
+  }
+}
+
