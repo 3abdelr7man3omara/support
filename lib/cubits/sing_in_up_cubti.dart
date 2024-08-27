@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:untitled2/cubits/sing_in_up_state.dart';
 
@@ -7,7 +8,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   AuthCubit(this._auth) : super(AuthInitial());
 
-  Future<void> registerUser(String email, String password, String displayName) async {
+Future<void> registerUser(String email, String password, String displayName) async {
     emit(AuthLoading());
     try {
       UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
@@ -18,6 +19,7 @@ class AuthCubit extends Cubit<AuthState> {
       // Update the user's profile with the display name
       await userCredential.user!.updateDisplayName(displayName);
       await userCredential.user!.reload(); // Reload to get the updated user info
+      await FirebaseFirestore.instance.collection('users').doc(userCredential.user!.uid).set({});
 
       emit(AuthAuthenticated(userCredential.user!));
       emit(AuthRegistered());
