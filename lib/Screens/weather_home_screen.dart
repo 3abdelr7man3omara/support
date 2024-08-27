@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:untitled2/Screens/Explore_Screen.dart';
 import 'package:untitled2/Screens/acount_screen.dart';
 import 'package:untitled2/Screens/home_screen.dart';
+import 'package:untitled2/Screens/weatherhome.dart';
 
 class WeatherHomeScreen extends StatefulWidget {
   const WeatherHomeScreen({super.key});
@@ -12,7 +13,7 @@ class WeatherHomeScreen extends StatefulWidget {
 }
 
 class _WeatherHomeScreenState extends State<WeatherHomeScreen> {
-  List<Widget> screens = [ExploreScreen(), HomeScreen(), Acount_Screen()];
+  List<Widget> screens = [ExploreScreen(), Weatherhome(), Acount_Screen()];
   int _currentIndex = 0; // State variable to track the selected tab index.
   User? user = FirebaseAuth.instance.currentUser;
 
