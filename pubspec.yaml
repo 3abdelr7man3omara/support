@@ -65,6 +65,8 @@ flutter:
   assets:
     - assets/back.jpeg
     - assets/8504201.jpg
+    - assets/weather_831319.png
+    - assets/weather-app_12165076.png
     - assets/lottie/Animation(1).json
     - assets/lottie/Animation.json
 

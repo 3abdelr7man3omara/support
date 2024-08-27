@@ -40,7 +40,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
     {"day": "Wed", "temperature": "20°C", "weather": "Rainy"},
     {"day": "Thu", "temperature": "23°C", "weather": "Sunny"},
     {"day": "Fri", "temperature": "26°C", "weather": "Sunny"},
-    {"day": "Sat", "temperature": "27°C", "weather": "Sunny"},
+    {"day": "Sat", "temperature": "27°C", "weather": "Clear"},
     {"day": "Sun", "temperature": "28°C", "weather": "Sunny"},
     {"day": "Next Week", "temperature": "N/A", "weather": "N/A"},
   ];
@@ -82,6 +82,8 @@ class _ExploreScreenState extends State<ExploreScreen> {
         return Icons.cloud;
       case "Rainy":
         return Icons.beach_access;
+      case "Clear" :
+        return Icons.wb_sunny_outlined;
       default:
         return Icons.help;
     }
@@ -90,8 +92,8 @@ class _ExploreScreenState extends State<ExploreScreen> {
   @override
   Widget build(BuildContext context) {
     IconData weatherIcon = _getWeatherIcon("_currentWeather");
-    return _searchQuery.isEmpty
-        ? Center(
+    return _searchQuery.isEmpty ?
+    Center(
             child:
                 CircularProgressIndicator()) // Show loading indicator while fetching the city
         : BlocProvider(
@@ -196,15 +198,11 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                   SizedBox(height: 10),
                                   Row(
                                     children: [
-                                      AnimatedSwitcher(
-                                        duration: const Duration(seconds: 1),
-                                        child: Icon(
-                                          weatherIcon,
-                                          key: ValueKey<String>(state
-                                              .weather_data.weatherDescription),
-                                          size: 50,
-                                          color: Colors.yellow,
-                                        ),
+                                      Icon(
+                                        _getWeatherIcon(state
+                                            .weather_data.weatherDescription),
+                                        size: 50,
+                                        color: Colors.yellow,
                                       ),
                                       SizedBox(width: 10),
                                       Column(
@@ -218,13 +216,13 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                               color: Colors.white,
                                             ),
                                           ),
-                                          Text(
-                                            "Humidity: ${state.weather_data.humidity}",
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                              color: Colors.white70,
-                                            ),
-                                          ),
+                                          // Text(
+                                          //   "Humidity: ${state.weather_data.humidity}",
+                                          //   style: TextStyle(
+                                          //     fontSize: 16,
+                                          //     color: Colors.white70,
+                                          //   ),
+                                          // ),
                                           Text(
                                             "Wind Speed: ${state.weather_data.windSpeed}",
                                             style: TextStyle(
@@ -265,7 +263,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          "Visibility",
+                                          "humidity",
                                           style: TextStyle(
                                             fontSize: 18,
                                             color: Colors.yellow,
@@ -274,7 +272,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                         ),
                                         SizedBox(height: 8),
                                         Text(
-                                          "10 km", // Example visibility data
+                                          "${state.weather_data.humidity}", // Example visibility data
                                           style: TextStyle(
                                             fontSize: 16,
                                             color: Colors.white,
@@ -305,7 +303,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          "UV Index",
+                                          "feelsLike",
                                           style: TextStyle(
                                             fontSize: 18,
                                             color: Colors.yellow,
@@ -314,7 +312,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                         ),
                                         SizedBox(height: 8),
                                         Text(
-                                          "Moderate", // Example UV Index data
+                                          "${state.weather_data.feelsLike} C", // Example UV Index data
                                           style: TextStyle(
                                             fontSize: 16,
                                             color: Colors.white,
@@ -362,7 +360,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                         ),
                                         SizedBox(height: 8),
                                         Text(
-                                          "10 km", // Example visibility data
+                                          "${state.weather_data.visibility} KM", // Example visibility data
                                           style: TextStyle(
                                             fontSize: 16,
                                             color: Colors.white,

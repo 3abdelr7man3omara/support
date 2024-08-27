@@ -49,7 +49,7 @@ class Weatherhome extends StatelessWidget {
               return Container(
                 color: backgroundColor,
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -63,7 +63,7 @@ class Weatherhome extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          ", ${state.weather_data.feelsLike}",
+                          ", ${state.weather_data.temperature}",
                           style: TextStyle(
                             fontSize: 15,
                             color: Colors.green,
@@ -81,7 +81,8 @@ class Weatherhome extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    Image.asset('assets/thunder.png'), // Example: Weather icon
+                    SizedBox(height : 50, width:50 ,
+                        child: Image.asset('assets/weather-app_12165076.png',)), // Example: Weather icon
                     const SizedBox(height: 20),
                     Text(
                       "${state.weather_data.description}", // Example: 22°C
@@ -92,7 +93,7 @@ class Weatherhome extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      state.weather_data.feelsLike, // Example: "Sunny"
+                      state.weather_data.temperature, // Example: "Sunny"
                       style: TextStyle(
                         fontSize: 20,
                         color: Colors.green,
@@ -101,20 +102,20 @@ class Weatherhome extends StatelessWidget {
                     ),
                     const SizedBox(height: 20),
                     Text(
-                      "Max Temp ${state.weather_data.temperature}°C",
+                      "feels like ${state.weather_data.feelsLike}°C",
                       style: TextStyle(
                         fontSize: 12,
                         color: Colors.green,
                       ),
                     ),
                     const SizedBox(width: 50),
-                    Text(
-                      "Min Temp ${state.weather_data.temperature}°C",
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.green,
-                      ),
-                    ),
+                    // Text(
+                    //   "Min Temp ${state.weather_data.temperature}°C",
+                    //   style: TextStyle(
+                    //     fontSize: 12,
+                    //     color: Colors.green,
+                    //   ),
+                    // ),
                   ],
                 ),
               );
