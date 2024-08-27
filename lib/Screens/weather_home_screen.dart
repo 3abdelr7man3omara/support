@@ -159,9 +159,7 @@ class _WeatherHomeScreenState extends State<WeatherHomeScreen> {
           ),
         ],
       ),
-      appBar: AppBar(
-        title: Text(cityName),
-      ),
+      
     );
   }
 }
