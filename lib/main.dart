@@ -31,8 +31,6 @@ class AppScrollBehavior extends MaterialScrollBehavior {
         PointerDeviceKind.trackpad,
       };
 }
-
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -45,8 +43,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => AuthCubit(FirebaseAuth.instance)),
       ],
       child: MaterialApp(
-      scrollBehavior: AppScrollBehavior(),
-
+        scrollBehavior: AppScrollBehavior(),
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(
@@ -58,7 +55,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
 
 class AuthGate extends StatelessWidget {
   @override
@@ -74,3 +70,5 @@ class AuthGate extends StatelessWidget {
     );
   }
 }
+
+
