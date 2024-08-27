@@ -6,9 +6,24 @@ import 'package:untitled2/cubits/sing_in_up_state.dart';
 class AuthCubit extends Cubit<AuthState> {
   final FirebaseAuth _auth;
 
-  AuthCubit(this._auth) : super(AuthInitial());
+  AuthCubit(this._auth) : super(AuthInitial()) {
+    _checkAuthStatus();
+  }
 
-Future<void> registerUser(String email, String password, String displayName) async {
+  Future<void> _checkAuthStatus() async {
+    try {
+      User? user = _auth.currentUser;
+      if (user != null) {
+        emit(AuthAuthenticated(user));
+      } else {
+        emit(AuthUnauthenticated());
+      }
+    } catch (e) {
+      emit(AuthError("Error checking auth status: ${e.toString()}"));
+    }
+  }
+
+  Future<void> registerUser(String email, String password, String displayName) async {
     emit(AuthLoading());
     try {
       UserCredential userCredential = await _auth.createUserWithEmailAndPassword(

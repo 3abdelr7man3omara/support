@@ -6,6 +6,7 @@ import 'package:untitled2/Screens/acount_screen.dart';
 import 'package:untitled2/Screens/home_screen.dart';
 import 'package:untitled2/Screens/weatherhome.dart';
 
+
 class WeatherHomeScreen extends StatefulWidget {
   const WeatherHomeScreen({super.key});
 
@@ -20,6 +21,7 @@ class _WeatherHomeScreenState extends State<WeatherHomeScreen> {
   String cityName = "Barcelona"; // Default city name
   TextEditingController cityController = TextEditingController();
   bool isFirstTime = true;
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -28,24 +30,38 @@ class _WeatherHomeScreenState extends State<WeatherHomeScreen> {
   }
 
   Future<void> _loadCityName() async {
-    if (user != null) {
-      DocumentSnapshot docSnapshot = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(user!.uid)
-          .get();
+  if (user != null) {
+    DocumentSnapshot docSnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user!.uid)
+        .get();
 
-      if (docSnapshot.exists) {
-        Map<String, dynamic> data = docSnapshot.data() as Map<String, dynamic>;
-        if (data.containsKey('cityName')) {
-          setState(() {
-            cityName = data['cityName'];
-            isFirstTime = false;
-            _updateScreens();
-          });
-        }
+    if (docSnapshot.exists) {
+      Map<String, dynamic> data = docSnapshot.data() as Map<String, dynamic>;
+      if (data.containsKey('cityName')) {
+        setState(() {
+          cityName = data['cityName'];
+          isFirstTime = false;
+          isLoading = false;
+          _updateScreens();
+        });
+      } else {
+        setState(() {
+          isLoading = false;
+        });
       }
+    } else {
+      setState(() {
+        isLoading = false;
+      });
     }
+  } else {
+    setState(() {
+      isLoading = false;
+    });
   }
+}
+  
 
   Future<void> _saveCityName(String cityName) async {
     if (user != null) {
@@ -78,6 +94,15 @@ class _WeatherHomeScreenState extends State<WeatherHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (isLoading) {
+    return Scaffold(
+      body: Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
+  }
+
+    
     if (isFirstTime) {
       return Scaffold(
         appBar: AppBar(title: Text('Welcome')),
