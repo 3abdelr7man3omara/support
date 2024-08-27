@@ -9,12 +9,14 @@ class WeatherServices{
   Future<weather_request>get_data(
       {required String path ,required Map<String,dynamic>query }) async{
     Response response =await dio.get(path,queryParameters: query);
+    print(response.data); 
 
     Map<String,dynamic> jsondata = response.data;
-    List<dynamic> data = jsondata["articles"];
-    late weather_request actual_data =weather_request.fromjson(data) ;
-
+    //List<dynamic> data = jsondata["articles"];
+    late weather_request actual_data =weather_request.fromjson(jsondata) ;
+    print(actual_data);
     return actual_data;
+    
 
   }
 

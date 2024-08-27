@@ -1,47 +1,40 @@
 class weather_request {
-  final String location ;
-  final String humidity ;
-  final String visibility ;
-  final String UV_index ;
-  final String temperature ;
-  final String weather_code;
-  final String weather_descriptions;
-  final String wind_speed;
-  final String weather_icons;
-  final String feelslike;
+  final String location;
+  final String humidity;
+  final String visibility;
+  final String uvIndex;
+  final String temperature;
+  final String weatherCode;
+  final String weatherDescription;
+  final String windSpeed;
+  final String weatherIcon;
+  final String feelsLike;
 
-
-
-  weather_request({required this.location,
+  weather_request({
+    required this.location,
     required this.humidity,
     required this.visibility,
-    required this.UV_index,
+    required this.uvIndex,
     required this.temperature,
-    required this.weather_code,
-    required this.weather_descriptions,
-    required this.wind_speed,
-    required this.weather_icons,
-    required this.feelslike,
+    required this.weatherCode,
+    required this.weatherDescription,
+    required this.windSpeed,
+    required this.weatherIcon,
+    required this.feelsLike,
+  });
 
-  } );
-
-
-  factory weather_request.fromjson(json){
+  factory weather_request.fromjson(Map<String, dynamic> json) {
     return weather_request(
-      humidity: json["humidity"],
-      visibility: json["visibility"],
-      wind_speed : json["wind_speed"],
-      weather_descriptions :json["weather_descriptions"],
-      weather_code:json["weather_code"],
-      temperature:json["temperature"],
-      UV_index:json["uv_index"],
-      location: json["region"],
-      weather_icons: json["weather_icons"],
-      feelslike: json["feelslike"],
-
+      location: json["location"]["name"],
+      humidity: json["current"]["humidity"].toString(),
+      visibility: json["current"]["visibility"].toString(),
+      uvIndex: json["current"]["uv_index"].toString(),
+      temperature: json["current"]["temperature"].toString(),
+      weatherCode: json["current"]["weather_code"].toString(),
+      weatherDescription: json["current"]["weather_descriptions"][0],
+      windSpeed: json["current"]["wind_speed"].toString(),
+      weatherIcon: json["current"]["weather_icons"][0],
+      feelsLike: json["current"]["feelslike"].toString(),
     );
   }
-
-
-
 }

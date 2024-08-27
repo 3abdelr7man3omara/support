@@ -13,7 +13,10 @@ class WeatherHomeScreen extends StatefulWidget {
 }
 
 class _WeatherHomeScreenState extends State<WeatherHomeScreen> {
-  List<Widget> screens = [ExploreScreen(), Weatherhome(), Acount_Screen()];
+
+
+  
+  List<Widget> screens = [ExploreScreen(), Weatherhome(cityName: "barcelona" ,), Acount_Screen()];
   int _currentIndex = 0; // State variable to track the selected tab index.
   User? user = FirebaseAuth.instance.currentUser;
 

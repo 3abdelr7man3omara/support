@@ -13,6 +13,7 @@ import 'package:untitled2/cubits/counter_cubit.dart';
 import 'package:untitled2/cubits/news_cubit.dart';
 import 'package:untitled2/cubits/sing_in_up_cubti.dart';
 import 'package:untitled2/cubits/sing_in_up_state.dart';
+import 'package:untitled2/cubits/weather_cubit.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
         //BlocProvider(create: (context) => NewsCubit()..get_news()),
         // BlocProvider(create: (context) => CounterCubit()),
         BlocProvider(create: (context) => AuthCubit(FirebaseAuth.instance)),
+        BlocProvider(create: (context) => WeatherCubit()),
       ],
       child: MaterialApp(
         scrollBehavior: AppScrollBehavior(),
@@ -62,6 +64,7 @@ class AuthGate extends StatelessWidget {
     return BlocBuilder<AuthCubit, AuthState>(
       builder: (context, state) {
         if (state is AuthAuthenticated) {
+          
           return WeatherHomeScreen();
         } else {
           return SignInScreen();
