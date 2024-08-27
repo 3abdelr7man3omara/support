@@ -2,6 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:untitled2/Screens/SplashScreen.dart';
+import 'package:untitled2/Screens/sing_in.dart';
+
+import '../main.dart';
 
 class Acount_Screen extends StatefulWidget {
   const Acount_Screen({super.key});
@@ -9,7 +13,14 @@ class Acount_Screen extends StatefulWidget {
   @override
   State<Acount_Screen> createState() => _Acount_ScreenState();
 }
+Future<void> _signOut() async {
+  await FirebaseAuth.instance.signOut();
+}
+Future <Widget> _signOut_()  async{
+  await FirebaseAuth.instance.signOut();
 
+  return new SignInScreen();
+}
 class _Acount_ScreenState extends State<Acount_Screen> {
   bool _switchValue = true;
   bool _switchValue2 = true;
@@ -99,7 +110,9 @@ class _Acount_ScreenState extends State<Acount_Screen> {
                         icon: Icon(Icons.settings, size: 40, color: Colors.white), // Adjust icon color for visibility
                       ),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) =>  MyApp() ));
+                        },
                         icon: Icon(Icons.logout, size: 40, color: Colors.white), // Adjust icon color for visibility
                       ),
                     ],

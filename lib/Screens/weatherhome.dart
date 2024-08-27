@@ -9,15 +9,19 @@ class Weatherhome extends StatelessWidget {
 
   // Method to get the background color based on weather condition
   Color? _getBackgroundColor(String weather) {
+    // print(weather);
+    // print("@#@##@#@#@##@#@##@#@##@#@");
     switch (weather) {
       case "Sunny":
-        return Colors.blue[200] ?? Colors.blue;
+        return Colors.yellowAccent[100] ?? Colors.yellow;
       case "Partly Cloudy":
-        return Colors.grey[300] ?? Colors.grey;
-      case "Rainy":
+        return Colors.grey[400] ?? Colors.grey;
+      case "Rainy" || "rainy" :
         return Colors.blueGrey[900] ?? Colors.blueGrey;
-      default:
+      case "clear" || "Clear" :
         return Colors.grey[100] ?? Colors.grey[300];
+      default:
+        return Colors.cyanAccent ?? Colors.grey[300];
     }
   }
 
@@ -27,7 +31,9 @@ class Weatherhome extends StatelessWidget {
       create: (context) => WeatherCubit()..get_weather(cityName),
       child: Scaffold(
         // Dynamically set the background color based on weather condition
-        appBar: null,
+        appBar: AppBar(
+          title: Text("Weather News",textAlign: TextAlign.center,style: TextStyle(color: Colors.white),),backgroundColor:Colors.black ,
+        ),
         backgroundColor: Colors.black,
         
         body: BlocBuilder<WeatherCubit, WeatherState>(
@@ -38,7 +44,7 @@ class Weatherhome extends StatelessWidget {
               );
             } else if (state is WeatherSuccesful) {
               // Get the background color based on the weather condition
-              Color backgroundColor = _getBackgroundColor(state.weather_data.feelsLike) ?? Colors.grey[100]!;
+              Color backgroundColor = _getBackgroundColor(state.weather_data.weatherDescription) ?? Colors.grey[100]!;
 
               return Container(
                 color: backgroundColor,

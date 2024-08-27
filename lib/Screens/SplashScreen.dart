@@ -14,7 +14,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(seconds: 5), () {
+    Future.delayed(Duration(seconds: 3), () {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (_) => OnboardingWrapper(),
@@ -23,9 +23,12 @@ class _SplashScreenState extends State<SplashScreen> {
     });
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       body: Center(
 
         child:  LottieBuilder.asset('assets/lottie/Animation(1).json',fit: BoxFit.contain,),
