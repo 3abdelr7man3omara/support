@@ -15,12 +15,15 @@ class ExploreScreen extends StatefulWidget {
 Future<String> fetchDefaultCity() async {
   final user = FirebaseAuth.instance.currentUser;
   if (user != null) {
-    final doc = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
-    return doc.data()?['cityName'] ?? "London"; // Fallback to a default city if not found
+    final doc = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .get();
+    return doc.data()?['cityName'] ??
+        "London"; // Fallback to a default city if not found
   }
   return "London"; // Fallback if user is not authenticated
 }
-
 
 class _ExploreScreenState extends State<ExploreScreen> {
   final TextEditingController _searchController = TextEditingController();
@@ -29,7 +32,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
   String _currentWeather = "Partly Cloudy"; // => API
   String _currentHumidity = "50%";
   String _currentWindSpeed = "15 km/h";
-  String _searchQuery = fetchDefaultCity().toString() ;
+  String _searchQuery = "";// Default value
 
   List<Map<String, String>> _weeklyForecast = [
     {"day": "Mon", "temperature": "24°C", "weather": "Sunny"},
@@ -42,12 +45,23 @@ class _ExploreScreenState extends State<ExploreScreen> {
     {"day": "Next Week", "temperature": "N/A", "weather": "N/A"},
   ];
 
-  void _searchLocation() {
-    // Implement search functionality here
-    setState(() {
-      _searchQuery = _searchController.text;
-    });
+  @override
+  void initState() {
+    super.initState();
+    _initializeDefaultCity();
   }
+
+  Future<void> _initializeDefaultCity() async {
+    String cityName = await fetchDefaultCity();
+    print("cityName: " + cityName);
+    setState(() {
+      _searchQuery = cityName;
+    });
+    print("SEAARCH_QUERY: " + _searchQuery);
+     // Fetch weather for the default city
+  }
+
+  
 
   Color? _getBackgroundColor(String weather) {
     switch (weather) {
@@ -77,39 +91,33 @@ class _ExploreScreenState extends State<ExploreScreen> {
 
   @override
   Widget build(BuildContext context) {
-    IconData weatherIcon = _getWeatherIcon(_currentWeather);
-
-    return BlocProvider(
-      create: (context) =>
-      WeatherCubit()
-        ..get_weather(_searchQuery),
-
-
-      child: Scaffold(
-        backgroundColor: _getBackgroundColor(_currentWeather),
-        appBar: AppBar(
-          title: Text(
-            "Explore",
-            style: TextStyle(
-              fontWeight: FontWeight.w700,
-              color: Colors.white,
-              fontSize: 35,
-            ),
-          ),
-          backgroundColor: Colors.black,
-        ),
-        body: BlocBuilder<WeatherCubit,WeatherState>(
+      IconData weatherIcon = _getWeatherIcon("_currentWeather");
+      return _searchQuery.isEmpty
+        ? Center(child: CircularProgressIndicator()) // Show loading indicator while fetching the city
+        : BlocProvider(
+            create: (context) => WeatherCubit()..get_weather(_searchQuery),
+            child: Scaffold(
+              backgroundColor: _getBackgroundColor(_currentWeather),
+              appBar: AppBar(
+                title: Text(
+                  "Explore",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    color: Colors.white,
+                    fontSize: 35,
+                  ),
+                ),
+                backgroundColor: Colors.black,
+              ),
+        body: BlocBuilder<WeatherCubit, WeatherState>(
           builder: (context, state) {
             if (state is WeatherLoading) {
               return Center(child: CircularProgressIndicator());
-            }
-            else if (state is Weatherfailed) {
+            } else if (state is Weatherfailed) {
               return Center(child: Text('Error: ${state.error}'));
-            }
-            else if (state is WeatherSuccesful) {
+            } else if (state is WeatherSuccesful) {
               return SingleChildScrollView(
                 child: Padding(
-
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -136,14 +144,14 @@ class _ExploreScreenState extends State<ExploreScreen> {
                               child: TextField(
                                 controller: _searchController,
                                 decoration: InputDecoration(
-
                                   hintText: 'Search for a location...',
                                   hintStyle: TextStyle(color: Colors.white70),
-                                  prefixIcon: Icon(
-                                      Icons.search, color: Colors.white),
+                                  prefixIcon:
+
+                                      Icon(Icons.search, color: Colors.white),
                                 ),
                                 style: TextStyle(color: Colors.white),
-                                onSubmitted: (_) =>_searchQuery ,
+                                onSubmitted: (_) => _searchQuery,
                               ),
                             ),
                           ],
@@ -168,7 +176,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              state.weather_data.location,
+                              state.weather_data.Country,
                               style: TextStyle(
                                 fontSize: 24,
                                 color: Colors.yellow,
@@ -193,25 +201,21 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "${state.weather_data
-                                          .temperature} - ${state.weather_data
-                                          .weatherDescription}",
+                                      "${state.weather_data.temperature} - ${state.weather_data.weatherDescription}",
                                       style: TextStyle(
                                         fontSize: 20,
                                         color: Colors.white,
                                       ),
                                     ),
                                     Text(
-                                      "Humidity: ${state.weather_data
-                                          .humidity}",
+                                      "Humidity: ${state.weather_data.humidity}",
                                       style: TextStyle(
                                         fontSize: 16,
                                         color: Colors.white70,
                                       ),
                                     ),
                                     Text(
-                                      "Wind Speed: ${state.weather_data
-                                          .windSpeed}",
+                                      "Wind Speed: ${state.weather_data.windSpeed}",
                                       style: TextStyle(
                                         fontSize: 16,
                                         color: Colors.white70,
@@ -264,7 +268,6 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                       color: Colors.white,
                                     ),
                                   ),
-
                                 ],
                               ),
                             ),
@@ -310,7 +313,8 @@ class _ExploreScreenState extends State<ExploreScreen> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 20,
+                      SizedBox(
+                        height: 20,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -350,7 +354,6 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                       color: Colors.white,
                                     ),
                                   ),
-
                                 ],
                               ),
                             ),
@@ -416,12 +419,12 @@ class _ExploreScreenState extends State<ExploreScreen> {
                           itemCount: _weeklyForecast.length,
                           itemBuilder: (context, index) {
                             final forecast = _weeklyForecast[index];
-                            IconData dayWeatherIcon = _getWeatherIcon(
-                                forecast['weather'] ?? '');
+                            IconData dayWeatherIcon =
+                                _getWeatherIcon(forecast['weather'] ?? '');
 
                             return Container(
-                              margin: const EdgeInsets.symmetric(
-                                  horizontal: 8.0),
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 8.0),
                               padding: const EdgeInsets.all(16.0),
                               decoration: BoxDecoration(
                                 color: Colors.black,
@@ -481,8 +484,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                   ),
                 ),
               );
-            }
-            else {
+            } else {
               return Center(child: Text('Please enter a location.'));
             }
           },
