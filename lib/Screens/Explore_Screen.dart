@@ -1,13 +1,17 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:untitled2/cubits/weather_cubit.dart';
 
+class ExploreScreen extends StatefulWidget {
+  const ExploreScreen({super.key});
 
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+  @override
+  State<ExploreScreen> createState() => _ExploreScreenState();
+}
 
-// Fetch the default city for the user from Firebase
 Future<String> fetchDefaultCity() async {
   final user = FirebaseAuth.instance.currentUser;
   if (user != null) {
@@ -18,14 +22,6 @@ Future<String> fetchDefaultCity() async {
 }
 
 
-class ExploreScreen extends StatefulWidget {
-  const ExploreScreen({super.key});
-
-  @override
-  State<ExploreScreen> createState() => _ExploreScreenState();
-}
-
-
 class _ExploreScreenState extends State<ExploreScreen> {
   final TextEditingController _searchController = TextEditingController();
   String _currentLocation = "Cairo, Egypt"; // Example location
@@ -33,7 +29,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
   String _currentWeather = "Partly Cloudy"; // => API
   String _currentHumidity = "50%";
   String _currentWindSpeed = "15 km/h";
-  String _searchQuery = "";
+  String _searchQuery = fetchDefaultCity().toString() ;
 
   List<Map<String, String>> _weeklyForecast = [
     {"day": "Mon", "temperature": "24°C", "weather": "Sunny"},
@@ -88,6 +84,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
       WeatherCubit()
         ..get_weather(_searchQuery),
 
+
       child: Scaffold(
         backgroundColor: _getBackgroundColor(_currentWeather),
         appBar: AppBar(
@@ -112,6 +109,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
             else if (state is WeatherSuccesful) {
               return SingleChildScrollView(
                 child: Padding(
+
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -138,14 +136,14 @@ class _ExploreScreenState extends State<ExploreScreen> {
                               child: TextField(
                                 controller: _searchController,
                                 decoration: InputDecoration(
-                                  border: InputBorder.none,
+
                                   hintText: 'Search for a location...',
                                   hintStyle: TextStyle(color: Colors.white70),
                                   prefixIcon: Icon(
                                       Icons.search, color: Colors.white),
                                 ),
                                 style: TextStyle(color: Colors.white),
-                                onSubmitted: (_) => _searchLocation(),
+                                onSubmitted: (_) =>_searchQuery ,
                               ),
                             ),
                           ],
